@@ -146,7 +146,7 @@ void avlbl(vector<booking>);  //shows available seats
   }
   void booking::avlbl(vector<booking> b1){
     int n=b1.size();
-    int seat[30]={0};
+    int seat[maxseat]={0};
     int temp[n]={0};
     cout<<"seats available:-\n";
     for(int i=0;i<n;i++){
@@ -155,21 +155,21 @@ void avlbl(vector<booking>);  //shows available seats
       }
     }
     if(n==0){
-    for(int i=0;i<30;i++){
+    for(int i=0;i<maxseat;i++){
       cout<<i+1<<"\t";
       if((i+1)%10==0){cout<<endl;}
     }
     cout<<endl;
   }else{
 
-    for(int i=0;i<30;i++){
+    for(int i=0;i<maxseat;i++){
       for(int j=0;j<n;j++){
         if(i+1==temp[j]){
           seat[i]=1;
         }
       }
     }
-    for(int i=0;i<30;i++){
+    for(int i=0;i<maxseat;i++){
       if(seat[i]==0){
       cout<<i+1<<"\t";
       }else{
