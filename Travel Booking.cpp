@@ -22,8 +22,7 @@ void check(vector<booking>);  //checks whether seats is available
 void avlbl(vector<booking>);  //shows available seats
  bool confirm=true; 
   booking()
-  {
-    id = 0;
+{
     count++;
     number = count;
     id=number*1001 +2;
