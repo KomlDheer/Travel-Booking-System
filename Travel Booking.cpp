@@ -29,7 +29,7 @@ string convert(string &str)//converts first alphabet of each word of a line to u
 bool checkname(string n){
   int num=0;
   for(size_t i=0;i<n.size();i++){
-    if(isdigit(n[i])){
+    if((!isalpha(n[i]))&&(!isspace(n[i]))){
       return false;
     }else if(isalpha(n[i])){
       num=1;
@@ -70,6 +70,23 @@ public:
   void updatedate(vector<booking>);
   void line() { cout << "-----------------------------------------------\n"; }
   void line2(){cout << "-------x-------x-------x-------x-------x-------x--------x-------\n";}
+  void setdestination(){
+     int ch;
+     cout<<"\t\t----SELECT DESTINATION----\n";
+    cout<<"1)Ajmer\n2)Alwar\n3)Barmer\n4)Bikaner\n5)Jaipur\n";
+    cout<<"enter destination bhoice:";
+    do{
+    cin>>ch;
+    if(ch==1){destination="Ajmer";break;}
+    else if(ch==2){destination="Alwar";break;}
+    else if(ch==3){destination="Barmer";break;}
+    else if(ch==4){destination="Bikaner";break;}
+    else if(ch==5){destination="Jaipur";break;}
+    else{
+      cout<<"invalid choice, enter again:";
+    }
+  }while(true);
+  }
   void create()
   {
     int i=0;
@@ -109,29 +126,12 @@ public:
     cout << "\tAGE : " << age << endl;
     line(); 
     do {
-      if(i==0){
-       cout << "enter destination:";
-        cin.ignore();
-        getline(cin, copy_des);
-      }else{
-        cout<<"enter again:";
-        getline(cin,copy_des);
-      }
-      i++;
-        if (!checkname(copy_des)) {
-            cout << "invalid name, enter again:\n";
-        }
-    } while (checkname(copy_des) != true);
-    destination=convert(copy_des);
-    i=0;
-    line();
-    cout << "\tDESTINATION : " << destination << endl;
-    line();
-    do {
         cout << "enter date (in form: DD-MM-YYYY):";
         cin >> date;
         check_date(date);
     } while (confirm != true);
+   setdestination();
+   line();cout<<"\tDESTINATION:"<<destination<<endl;line();
   }
   void setseatnumber(vector<booking> b1)//taking input(seatnumber)
   {  
@@ -158,7 +158,7 @@ public:
         cout << (seat[i] ? "x\t" : to_string(i + 1) + "\t");
         if ((i + 1) % 10 == 0) cout << endl;
     }
-    int c=0;
+  
     do{
       cout << "enter seat number:";
       cin >> seatnumber;
@@ -167,12 +167,11 @@ public:
       cin.clear();
       cin.ignore(numeric_limits<streamsize>::max(), '\n');
       cout << "Invalid input, please enter a number.\n";
-      c++;
       continue;
     }else{
-      c=0;
+      break;
     }
-  }while(c!=0);
+  }while(true);
       if (seatnumber> maxseat){
         line2();cout << "invalid choice, enter again\n";line2();
       confirm=false;
@@ -239,23 +238,7 @@ public:
     age=newage;
   }
   void update_des(vector<booking> b1){
-    string new_des;
-    int i=0;
-    do{
-      if(i==0){
-    cout<<"enter new destination:";
-    cin.ignore();
-    getline(cin, new_des);
-      }else{
-        cout<<"enter again:";
-        getline(cin,new_des);
-      }
-    if(checkname(new_des)!=true){
-      cout<<"invalid name\n";
-    }
-    i++;
-    }while(checkname(new_des)!=true);
-    destination=convert(new_des);
+    setdestination();
     setseatnumber(b1);
   }
   void update_date(vector<booking> b1){
@@ -359,7 +342,7 @@ int main()
   int found=0;
   do
   {
-    cout << "\tpress 1 to add booking\n\tpress 2 to update booking\n\tpress 3 to search [by ID/name/age/destination/date]\n\tpress 4 to cancel booking\n\tpress 5 to show all bookings\n\tpress 6 to Exit\n";
+    cout << "\tpress 1 to add booking\n\tpress 2 to update booking\n\tpress 3 to search [by ID/name/destination/date]\n\tpress 4 to cancel booking\n\tpress 5 to show all bookings\n\tpress 6 to Exit\n";
     cin >> ch_1;
     if(cin.fail())
     {
@@ -416,7 +399,7 @@ int main()
     else if (ch_1 == 3)
     { //-------------------searching
       char ch_2;
-      cout << "press 'a' to search by ID\npress 'b' to search by name\npress 'c' to search by age\npress 'd' to search by destination\npress 'e' to search by date\n";
+      cout << "press 'a' to search by ID\npress 'b' to search by name\npress 'c' to search by destination\npress 'd' to search by date\n";
       cin >> ch_2;
       switch (ch_2)
       {
@@ -455,30 +438,6 @@ int main()
         found=0;
         break;
       case 'c':
-        int Age;
-        cout << "enter age:";
-        cin >> Age;
-         if (cin.fail()) 
-    {
-      cin.clear(); 
-      cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
-      cout << "Invalid input, please enter a number.\n";
-      continue; 
-    }
-        for (size_t i = 0; i < array.size(); i++)
-        {
-          if (array[i]._age() == Age)
-          {
-            array[i].show();
-            found =1;
-          }
-        }
-        if(found==0){
-          line2();cout<<"no booking found with given age\n";line2();
-        }
-        found=0;
-        break;
-      case 'd':
         cout << "enter name:";
         cin.ignore();
         getline(cin, New);
@@ -496,7 +455,7 @@ int main()
         }
         found=0;
         break;
-      case 'e':
+      case 'd':
         cout << "enter date:";
         cin >> New;
         for (size_t i = 0; i < array.size(); i++)
