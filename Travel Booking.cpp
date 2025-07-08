@@ -125,13 +125,14 @@ public:
     line();
     cout << "\tAGE : " << age << endl;
     line(); 
+     setdestination();
+   line();cout<<"\tDESTINATION:"<<destination<<endl;line();
     do {
         cout << "enter date (in form: DD-MM-YYYY):";
         cin >> date;
         check_date(date);
     } while (confirm != true);
-   setdestination();
-   line();cout<<"\tDESTINATION:"<<destination<<endl;line();
+  
   }
   void setseatnumber(vector<booking> b1)//taking input(seatnumber)
   {  
@@ -284,7 +285,7 @@ void booking::check_date(string){
       year = stoi(date.substr(6, 4));
       month = stoi(date.substr(3, 2));
       day = stoi(date.substr(0, 2));
-      if (month < 1 || month > 12 || day < 1 || day > 31 ||((year % 4 != 0) && (month == 2 && day > 28)) ||((year % 4 == 0) && (month == 2 && day > 29)) || year < 2025)
+      if (month < 1 || month > 12 || day < 1 || day > 31 ||((year % 4 != 0) && (month == 2 && day > 28)) ||((year % 4 == 0) && (month == 2 && day > 29)) || year < 2025||year>2026)
       {
         cout << "invalid date, enter again\n";
         confirm = false;
