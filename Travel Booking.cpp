@@ -47,14 +47,13 @@ class booking//for grouping the data of passengers
   int age;
   string destination;
   int seatnumber; 
-  int price=100;
+  int price;
   string date;
   int id;
 public:
   bool confirm = true;//converted to false when invalid data input provided 
   booking(){
-    srand(static_cast<unsigned int>(time(0)));
-    id=rand();
+   id=rand();
   }
   booking(string name_,int age_,string destination_,int seatnumber_,int id_,string date_){
     name=name_;
@@ -63,7 +62,12 @@ public:
     date=date_;
     seatnumber=seatnumber_;
     id=id_;
-
+    if(destination=="Ajmer"){price=100;}
+    else if(destination=="Alwar"){price=150;}
+    else if(destination=="Barmer"){price=200;}
+    else if(destination=="Bikaner"){price=250;}
+    else if(destination=="Jaipur"){price=300;}
+    else{price=0;}//if destination not selected
 
   }
   void check_date(string);//verifies that date is in correct format
@@ -74,14 +78,14 @@ public:
      int ch;
      cout<<"\t\t----SELECT DESTINATION----\n";
     cout<<"1)Ajmer\n2)Alwar\n3)Barmer\n4)Bikaner\n5)Jaipur\n";
-    cout<<"enter destination bhoice:";
+    cout<<"enter destination choice:";
     do{
     cin>>ch;
-    if(ch==1){destination="Ajmer";break;}
-    else if(ch==2){destination="Alwar";break;}
-    else if(ch==3){destination="Barmer";break;}
-    else if(ch==4){destination="Bikaner";break;}
-    else if(ch==5){destination="Jaipur";break;}
+    if(ch==1){destination="Ajmer";price=100;break;}
+    else if(ch==2){destination="Alwar";price=150;break;}
+    else if(ch==3){destination="Barmer";price=200;break;}
+    else if(ch==4){destination="Bikaner";price=250;break;}
+    else if(ch==5){destination="Jaipur";price=300;break;}
     else{
       cout<<"invalid choice, enter again:";
     }
@@ -90,7 +94,7 @@ public:
   void create()
   {
     int i=0;
-    string copy_name, copy_des, copy_age;
+    string copy_name;
     do {
       if(i==0){
     cout << "enter name:";
@@ -125,14 +129,14 @@ public:
     line();
     cout << "\tAGE : " << age << endl;
     line(); 
-     setdestination();
+  setdestination();
    line();cout<<"\tDESTINATION:"<<destination<<endl;line();
     do {
         cout << "enter date (in form: DD-MM-YYYY):";
         cin >> date;
         check_date(date);
     } while (confirm != true);
-  
+ 
   }
   void setseatnumber(vector<booking> b1)//taking input(seatnumber)
   {  
@@ -173,7 +177,7 @@ public:
       break;
     }
   }while(true);
-      if (seatnumber> maxseat){
+      if (seatnumber> maxseat||seatnumber<1){
         line2();cout << "invalid choice, enter again\n";line2();
       confirm=false;
       }else {
@@ -193,24 +197,14 @@ public:
     cout << "_______________________________________________________________________________________________________________________________\n";
     cout <<"Name:"<< setw(12) << left << name <<"Age:"<< setw(5) << age ;
     cout <<"Destination:"<<left<< setw(15) << destination <<"Seat No.:"<< right<<setw(3) << seatnumber;
-    cout << "\tID:" <<left<< setw(12) << id << setw(4) << "fee:";
-    if (age > 10)
-    {
-      cout << price << "\t";
-    }
-    else
-    {
-      cout << price * 0.8 << "\t";
-    }
+    cout << "\tID:" <<left<< setw(12) << id << setw(4) << "fee:"<<setw(4)<<price;
     cout << "date:" << date << "\t";
     if (confirm){cout << "   confirmed" << endl;}
     else{cout << "   cancelled" << endl;}
     cout << "_______________________________________________________________________________________________________________________________\n";
   }
   void display(){
-    cout<<"|"<<setw(12)<<left<<name<<"|"<<setw(5)<<age<<"|"<<setw(15)<<left<<destination<<"|"<<setw(7)<<left<<seatnumber<<"|"<<setw(12)<<left<<id<<"|"<<setw(14)<<date<<"|";
-    if(age<10){cout<<setw(4)<<"80"<<"|"<<endl;}
-    else{cout<<setw(4)<<"100"<<"|"<<endl;}
+    cout<<"|"<<setw(12)<<left<<name<<"|"<<setw(5)<<age<<"|"<<setw(15)<<left<<destination<<"|"<<setw(7)<<left<<seatnumber<<"|"<<setw(12)<<left<<id<<"|"<<setw(14)<<date<<"|"<<setw(4)<<_price()<<"|"<<endl;
   }
   void update_name()
   {
@@ -296,6 +290,9 @@ void booking::check_date(string){
         if (month == 4 || month == 6 || month == 9 || month == 11){
           if (day > 30){
             cout << "This month cannot have more than 30 days\n";
+            confirm = false;
+          } else {
+            confirm = true;
           }
         }
         else {
@@ -306,8 +303,11 @@ void booking::check_date(string){
   }
 }
 void line2(){cout << "-------x-------x-------x-------x-------x-------x--------x-------\n";}
+
+
 int main()
 {
+  srand(static_cast<unsigned int>(time(0)));
   cout << "\n\n"<<setw(60)<<"TRAVEL BOOKING SYSTEM";
   vector<booking> array;
   ifstream in("C:\\Users\\DELL\\.vscode\\.vscode\\bookings.csv");
@@ -366,15 +366,20 @@ int main()
     else if (ch_1 == 2)
     {
       char ch2;
-      cout << "press 'a' to update name\npredd 'b' to update age\npress 'c' to update seatnumber\npress 'd' to update destination\npress 'e' to update date\n";
+      cout << "press 'a' to update name\npress 'b' to update age\npress 'c' to update seatnumber\npress 'd' to update destination\npress 'e' to update date\n";
       cin >> ch2;
       cout<<"enter ID of passenger:";
       cin>>ID;
       for(size_t i=0;i<array.size();i++){
       if(array[i]._id()==ID ){
           y=i;
+          found=1;
+          break;
       }
-      found=0;
+      }
+      if(found==0){
+        line2();cout<<"no booking found with given ID\n";line2();
+        break;
       }
       if(ch2=='a'){
           array[y].update_name(); 
@@ -383,11 +388,9 @@ int main()
           array[y].update_age();
           array[y].show();
       }else if(ch2=='c'){
-          array[y].confirm=false;
           array[y].setseatnumber(array);
           array[y].show();
       }else if(ch2=='d'){
-          array[y].confirm=false;
           array[y].update_des(array);
           array[y].show();
       }else if(ch2=='e'){
@@ -498,7 +501,7 @@ int main()
     {
       cout<<endl;
       cout<<"_____________________________________________________________________________\n";
-       cout<<"|"<<left<<setw(12)<<"NAME"<<"|"<<setw(5)<<left<<"AGE"<<"|"<<left<<setw(15)<<"DESTINASTION"<<"|"<<left<<setw(7)<<"SEAT.No"<<"|"<<setw(12)<<left<<"ID"<<"|"<<setw(14)<<"Date"<<"|"<<setw(4)<<"fee"<<"|"<<endl;
+       cout<<"|"<<left<<setw(12)<<"NAME"<<"|"<<setw(5)<<left<<"AGE"<<"|"<<left<<setw(15)<<"DESTINATION"<<"|"<<left<<setw(7)<<"SEAT.No"<<"|"<<setw(12)<<left<<"ID"<<"|"<<setw(14)<<"Date"<<"|"<<setw(4)<<"fee"<<"|"<<endl;
        cout<<"-----------------------------------------------------------------------------\n";
      for(size_t i=0;i<array.size();i++)
        {
