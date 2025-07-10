@@ -17,7 +17,8 @@ and date.<br/>
 ## File Structure
 travelbooking.cpp-->Main source code file.<br/>
 bookings.csv-->Data file for storing bookings. <br/>
-Document.docx-->Full documentation.
+Document.docx-->Full documentation.<br/>
+Document.pdf-->Documentation file in pdf format.
 
 ## Notes
 1]The program checks for valid input(e.g., name format, 
