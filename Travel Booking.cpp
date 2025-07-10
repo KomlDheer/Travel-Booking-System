@@ -125,7 +125,8 @@ public:
       age=-1;
       continue; // Skip to the next iteration of the loop
     }
-    }while(age<0||age>150);
+    if(age<0||age>150){cout<<"invalid age";}
+        while(age<0||age>150);
     line();
     cout << "\tAGE : " << age << endl;
     line(); 
@@ -430,7 +431,7 @@ int main()
         convert(New);
         for (size_t i = 0; i < array.size(); i++)
         {
-          if (array[i]._name() == New)
+          if (array[i]._name() == New && array[i]._id()!=0 )
           {
             array[i].show();
             found=1;
@@ -448,7 +449,7 @@ int main()
         convert(New);
         for (size_t i = 0; i < array.size(); i++)
         {
-          if (array[i]._destination() == New)
+          if (array[i]._destination() == New && array[i]._id()!=0 )
           {
             array[i].show();
             found=1;
@@ -464,7 +465,7 @@ int main()
         cin >> New;
         for (size_t i = 0; i < array.size(); i++)
         {
-          if (array[i]._date() == New)
+          if (array[i]._date() == New && array[i]._id()!=0 )
           {
             array[i].show();
             found=1;
