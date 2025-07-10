@@ -16,7 +16,8 @@ and date.<br/>
 
 ## File Structure
 travelbooking.cpp-->Main source code file.<br/>
-bookings.csv-->Data file for storing bookings.   
+bookings.csv-->Data file for storing bookings. <br/>
+Document.docx-->Full documentation.
 
 ## Notes
 1]The program checks for valid input(e.g., name format, 
@@ -33,7 +34,6 @@ Seat No. :*5*
 ID: *123456*  
 Fee: *100*  
 Date :*12-07-2025*  
-Status :*confirmed*  
 
 
 
