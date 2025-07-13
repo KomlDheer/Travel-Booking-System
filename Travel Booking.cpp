@@ -295,6 +295,7 @@ int main()
      booking b(data[0],stoi(data[1]),data[2],stoi(data[3]),stoi(data[4]),data[5]);//create booking with aquired data
       myVector.push_back(b);//add booking to vector of booking 'array'
     }
+  }
   cout << "\n------------------------------------------------------------------------------\n";
   cout << "number of already existing bookings:" << myVector.size() << "\n";//shows number of bookings that have been retrieved from the csv file
   cout << "-------------------------------------------------------------------------------\n";
